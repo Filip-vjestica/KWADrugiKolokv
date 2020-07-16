@@ -1,0 +1,35 @@
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="col">Description</th>
+        <th scope="col" *ngIf="login.validateRoles(['ROLE_USER'])">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of tasks">
+        <th scope="row">{{ t.id }}</th>
+        <td>{{ t.title }}</td>
+        <td>{{ t.status }}</td>
+        <td>{{ t.description }}</td>
+        <td>
+          <button type="button" class="btn btn-danger" *ngIf="login.validateRoles(['ROLE_USER'])" (click)="delete(t.id)">
+            Delete
+          </button>
+          <button type="button" class="btn btn-info" *ngIf="login.validateRoles(['ROLE_USER'])" [routerLink]="['/tasks', t.id]" style="color: white;">
+            Details
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <button class="btn btn-primary" (click)="addNew()" *ngIf="login.validateRoles(['ROLE_USER'])">
+    Add new role
+  </button>
+  
+  <app-add-new-task *ngIf="formActive" [tasks]="tasks" (onSubmit)="save($event)">
+  </app-add-new-task>
+  
